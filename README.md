@@ -6,6 +6,13 @@ adaptation, module design, a build loop (code, review, test, fix), security and 
 and your Git decision. A deterministic engine (an MCP server inside the plugin) owns the rules, gates and checks; you
 make every decision and approval.
 
+## Guides
+
+- [Set up the agents in GitHub Copilot](docs/setup-github-copilot.md): a step-by-step local setup.
+- [Architecture, flow and usage](docs/architecture-and-usage.md): how the agents work, and how to run greenfield and
+  brownfield projects.
+- `project-files/`: the same agents as files to copy into a project, for hosts without plugin support (Visual Studio).
+
 ## Before you start
 
 - **.NET SDK** (the version this release was built with, see `plugins/dotnet-agents/release-manifest.json`) and **Git**.
