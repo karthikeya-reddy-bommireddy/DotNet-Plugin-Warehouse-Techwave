@@ -1,0 +1,16 @@
+{
+  "mcpServers": {
+    "agents-engine": {
+      "type": "stdio",
+      "command": "agents",
+      "args": [
+        "engine",
+        "serve",
+        "--project",
+        ".",
+        "--host",
+        "claude"
+      ]
+    }
+  }
+}

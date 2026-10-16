@@ -1,0 +1,7 @@
+{
+  "chat.tools.eligibleForAutoApproval": {
+    "agents-engine/git_commit": false,
+    "agents-engine/git_push": false,
+    "agents-engine/git_create_pr": false
+  }
+}

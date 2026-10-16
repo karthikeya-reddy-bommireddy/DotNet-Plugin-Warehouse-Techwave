@@ -1,0 +1,16 @@
+{
+  "servers": {
+    "agents-engine": {
+      "type": "stdio",
+      "command": "agents",
+      "args": [
+        "engine",
+        "serve",
+        "--project",
+        "${workspaceFolder}",
+        "--host",
+        "copilot"
+      ]
+    }
+  }
+}

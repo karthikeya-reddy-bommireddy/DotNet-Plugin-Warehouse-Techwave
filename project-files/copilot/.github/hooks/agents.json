@@ -1,0 +1,77 @@
+{
+  "version": 1,
+  "hooks": {
+    "preToolUse": [
+      {
+        "type": "command",
+        "bash": "agents hook pre-tool-use",
+        "powershell": "agents hook pre-tool-use",
+        "timeoutSec": 10
+      }
+    ],
+    "postToolUse": [
+      {
+        "type": "command",
+        "bash": "agents hook post-tool-use",
+        "powershell": "agents hook post-tool-use",
+        "timeoutSec": 10
+      }
+    ],
+    "subagentStart": [
+      {
+        "type": "command",
+        "bash": "agents hook subagent-start",
+        "powershell": "agents hook subagent-start",
+        "timeoutSec": 10
+      }
+    ],
+    "subagentStop": [
+      {
+        "type": "command",
+        "bash": "agents hook subagent-stop",
+        "powershell": "agents hook subagent-stop",
+        "timeoutSec": 30
+      }
+    ],
+    "agentStop": [
+      {
+        "type": "command",
+        "bash": "agents hook stop",
+        "powershell": "agents hook stop",
+        "timeoutSec": 10
+      }
+    ],
+    "sessionStart": [
+      {
+        "type": "command",
+        "bash": "agents hook session-start",
+        "powershell": "agents hook session-start",
+        "timeoutSec": 10
+      }
+    ],
+    "preCompact": [
+      {
+        "type": "command",
+        "bash": "agents hook pre-compact",
+        "powershell": "agents hook pre-compact",
+        "timeoutSec": 10
+      }
+    ],
+    "errorOccurred": [
+      {
+        "type": "command",
+        "bash": "agents hook api-error",
+        "powershell": "agents hook api-error",
+        "timeoutSec": 10
+      }
+    ],
+    "sessionEnd": [
+      {
+        "type": "command",
+        "bash": "agents hook session-end",
+        "powershell": "agents hook session-end",
+        "timeoutSec": 10
+      }
+    ]
+  }
+}
