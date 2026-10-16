@@ -1,0 +1,17 @@
+{
+  "mcpServers": {
+    "agents-engine": {
+      "type": "stdio",
+      "command": "dotnet",
+      "args": [
+        "${CLAUDE_PLUGIN_ROOT}/engine/agents.dll",
+        "engine",
+        "serve",
+        "--project",
+        "${CLAUDE_PROJECT_DIR}",
+        "--host",
+        "claude"
+      ]
+    }
+  }
+}
