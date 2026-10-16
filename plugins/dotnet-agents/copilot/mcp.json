@@ -1,0 +1,17 @@
+{
+  "mcpServers": {
+    "agents-engine": {
+      "type": "stdio",
+      "command": "dotnet",
+      "args": [
+        "${PLUGIN_ROOT}/engine/agents.dll",
+        "engine",
+        "serve",
+        "--project",
+        ".",
+        "--host",
+        "copilot"
+      ]
+    }
+  }
+}
