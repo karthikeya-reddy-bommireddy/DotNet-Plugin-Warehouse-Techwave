@@ -7,8 +7,6 @@
         "${PLUGIN_ROOT}/engine/agents.dll",
         "engine",
         "serve",
-        "--project",
-        ".",
         "--host",
         "copilot"
       ]

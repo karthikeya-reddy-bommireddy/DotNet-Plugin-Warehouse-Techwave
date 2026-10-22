@@ -57,7 +57,7 @@
   "hooks": {
     "PreToolUse": [
       {
-        "matcher": "Bash|PowerShell|Read|Write|Edit|MultiEdit|NotebookEdit|Task|Agent|mcp__.*",
+        "matcher": "*",
         "hooks": [
           {
             "type": "command",

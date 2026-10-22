@@ -53,7 +53,8 @@ installed files with the release manifest).
 
 ## Use
 
-Open a .NET repository (a Git repository with a commit) and tag the orchestrator:
+Open a .NET repository at its top folder (a Git repository with a commit; the agents never treat a subfolder or a
+folder outside Git as a project) and tag the orchestrator:
 
 - Claude Code: `@agent-dotnet-agents:dotnet-orchestrator start a run for the Orders module with ba.json`
   (or `claude --agent dotnet-agents:dotnet-orchestrator`)
@@ -64,6 +65,19 @@ have it. The orchestrator tells you at each gate which command to run (`agents a
 `agents status` lists your runs. Other developer commands: `agents rerun <run>` (the BA package changed),
 `agents rollback <run>`, `agents lesson list | approve | reject` (lessons from run retrospectives) and
 `agents metrics` (what your runs measure against the team's targets).
+
+**BA documents as a folder.** When the BA team delivers a folder of Markdown and CSV documents instead of a BA package,
+import it, read the report it prints, then accept it:
+
+```
+agents ba import <folder>
+agents ba accept <IMP-nnnn>
+```
+
+Accepting writes `<folder>/ba-package.json`, which cites the source lines of every requirement; start the run with it.
+Gate 1 then lists what the BA marked [Assumed], the contradictions and the stories that open questions block: you
+confirm each item or send it back to the BA, and open questions are answered in the BA's documents (import, accept and
+`agents rerun` again), never in chat.
 
 **Keep the AI tool in a mode that asks before it acts.** Claude Code: Manual mode (not auto mode, `acceptEdits` or
 `bypassPermissions`). VS Code: no global auto-approval or Autopilot. Copilot CLI: no `--allow-all-tools` or `--yolo`.
@@ -80,6 +94,11 @@ copilot plugin install dotnet-agents@techwave-dotnet
 
 dotnet tool update --global Agents.Cli --add-source <this-repository>/cli
 ```
+
+**From 1.0.0 to 1.0.1:** update the plugin and the developer commands as above, restart the AI tool, and run
+`agents verify`. Each agent now asks for its own models (Claude Opus or Sonnet), also when the chat's model picker is on
+Auto. The 1.0.0 engine could create a `.agents/` folder in a folder that is not a project (the VS Code installation
+folder or your home folder): the setup guide's troubleshooting table says which files to delete there.
 
 To go back to an earlier release, add the marketplace at its tag, for example
 `claude plugin marketplace add karthikeya-reddy-bommireddy/DotNet-Plugin-Warehouse-Techwave@v1.0.0`, and install again.

@@ -3,7 +3,7 @@ name: intake
 description: Use when a developer starts a conversation, asks for new work, a change, a status, a resume or a cancel, asks a question about a run, or supplies a BA package. Classifies the request, explains the BA validator's findings and starts a run through the engine. Do not use to judge whether a BA package is valid (the engine's validator decides) or to plan modules.
 license: Proprietary
 metadata:
-  version: 1.1.0
+  version: 1.2.0
   agent: dotnet-orchestrator
   contract: intake/1
 ---
@@ -31,6 +31,12 @@ If two intents are plausible, ask one question. Never guess.
 ## Step 2 - Check the BA package
 1. Ask for the package path if it was not given. Accept a ba-package/1 JSON file. If the BA plugin
    produced only Word or PDF documents, say that the engine needs the JSON package.
+   - If the developer names a BA team's folder of Markdown and CSV documents, it is imported first. Give the
+     developer the commands; you cannot run them: `agents ba import <folder>` (it prints the import ID, the counts
+     and any blocking problem, which the BA fixes in the documents), then `agents ba accept <IMP-nnnn>` (only the
+     developer accepts). Accepting writes `<folder>/ba-package.json`; that file is the package.
+   - The engine refuses an imported package that was not accepted as it is or whose documents changed since: the
+     same two commands follow. Never edit `ba-package.json` by hand.
 2. Call `validate_ba_package(path)`.
 3. If `valid` is false:
    - list the findings by `groups` in at most 5 bullets: missing, duplicate, dangling, contradiction,
@@ -50,7 +56,9 @@ If two intents are plausible, ask one question. Never guess.
 2. If the engine refuses because a run is active for the module or another run is Running, show that
    run's status and offer resume or cancel. Never start a second run.
 3. Turn every contradiction hint from the validator into one precise blocking question for Gate 1 with
-   `open-questions`. Nobody picks one of two conflicting statements silently.
+   `open-questions`. Nobody picks one of two conflicting statements silently. An imported package is the
+   exception: its [Assumed] items, the contradictions kept at acceptance and its open questions reach Gate 1 through
+   the engine (`gate-package`); raise no questions of your own for them.
 4. Call `next_step(run_id)` and continue with the skill it names.
 
 ## Step 4 - Answer a question

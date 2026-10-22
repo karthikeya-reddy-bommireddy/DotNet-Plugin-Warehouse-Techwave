@@ -69,15 +69,15 @@ flowchart TD
 
 | Stage | What happens | What you do |
 |---|---|---|
-| **Intake** | The engine validates the BA package: missing values, contradictions, injection, secrets | Fix the package at its source if it is refused |
+| **Intake** | The engine validates the BA package: missing values, contradictions, injection, secrets. A BA team's folder of documents is imported and accepted first | Fix the package at its source if it is refused. For a folder: `agents ba import <folder>`, then `agents ba accept <IMP-nnnn>` |
 | **Adaptation** | The adapter maps the requirements to .NET. Open points become questions or decisions | Answer and decide with the commands shown |
-| **Gate 1** | The adapted design is put to you | `agents approve <run> gate-1` or `agents reject … --comment "…"` |
+| **Gate 1** | The adapted design is put to you. For an imported package also what the BA marked [Assumed] (by section), the contradictions and the stories open questions block | Confirm each [Assumed] group and contradiction or send it to the BA (`agents decide`); open questions are fixed in the BA documents, then `agents ba import`, `agents ba accept`, `agents rerun`. Then `agents approve <run> gate-1` or `agents reject … --comment "…"` |
 | **Plan** | The engine decides between the full path and the small-change path | Nothing |
 | **Design** | The module design, its API contract and the exact files it may change (scope) | Review |
 | **Gate 2** | Design and scope are frozen after your approval | `agents approve <run> gate-2` |
 | **Build loop** | Round 1: coder, reviewer, tester. Rounds 2 and 3: fixer (and review again when needed). Builds and tests run in a sandbox. After 3 failed rounds the run stops and you decide | Watch `agents status`; decide when asked |
 | **Security and docs** | Scanners on the final code; documentation | Decide on open critical or high findings (fix, accept, defer) |
-| **Gate 3** | The verification summary: build, analyzers, tests, review, acceptance criteria, fake-fix guard, scope, compatibility, design conformance (with requirements verified), security, docs | `agents approve <run> gate-3` |
+| **Gate 3** | The verification summary: build, analyzers, tests, review, acceptance criteria, fake-fix guard, scope, compatibility, design conformance (with requirements verified), security, docs. For an imported package, each functional requirement of the RTM: verified only when all its stories are | `agents approve <run> gate-3` |
 | **Git** | A commit proposal (branch, message). Push and pull request follow | Say yes, then confirm each Git call in the AI tool |
 
 ### What keeps it safe
@@ -168,6 +168,7 @@ every check still runs. Only the engine decides that a change is small.
 | `agents answer <run> <question> "…"` | Answer a question |
 | `agents pause <run>` / `agents resume <run>` | Pause and resume |
 | `agents rerun <run>` | Re-run after the BA package changed |
+| `agents ba import <folder>` / `agents ba accept <IMP-nnnn>` | Import a BA team's documents, then accept the import as the package |
 | `agents rollback <run> [--to <checkpoint>]` | Roll back to a rollback point |
 | `agents cancel <run>` | Cancel |
 | `agents lesson list\|approve\|reject` | Lessons from finished runs |

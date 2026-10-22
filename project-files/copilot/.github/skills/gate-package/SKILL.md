@@ -3,7 +3,7 @@ name: gate-package
 description: Use when next_step requests approval for Gate 1 (adaptation and technology), Gate 2 (module design) or Gate 3 (final change against the approved design). Assembles gate-package/1 with evidence and calls request_approval. Do not use to approve anything; only the developer approves through the engine's channel.
 license: Proprietary
 metadata:
-  version: 1.6.0
+  version: 1.8.0
   agent: dotnet-orchestrator
   contract: gate-package/1
 disable-model-invocation: true
@@ -22,6 +22,19 @@ A "yes" in chat is not an approval: only `agents approve` records one.
 
 Evidence values are paths, never pasted content: relative to the run worktree, or under `.agents/`
 for engine records such as accepted reports.
+
+## Gate 1 of an imported BA package
+When the run's package was imported (`agents ba import`, `agents ba accept`), the engine fills `ba_review` at Gate 1
+and returns it with `request_approval`, also when the gate is not ready:
+- `assumed_groups`: the items and lines the BA marked [Assumed], one group per source section;
+- `contradictions`: the ones the developer's acceptance kept from the import report;
+- `blocked_stories`: each story with the open questions that block it.
+Each [Assumed] group and each contradiction is an engine decision (`confirm`, or `send_to_ba`); present them with their
+commands like any other decision. A blocked story, or anything sent to the BA, keeps Gate 1 closed until the BA changes
+the documents and the developer runs `agents ba import <folder>`, `agents ba accept <IMP-nnnn>` and
+`agents rerun <run>`. Open questions are fixed at the source, never answered in chat: never ask the developer to answer
+one, never word an answer, never raise a decision or question of your own for them. After the re-run, a group whose
+content is unchanged keeps its confirmation; a changed one gets a new decision. Show the lists in your message.
 
 ## Gate 3: what the engine checks first
 Before the developer is asked, every check of `get_verification_summary` must pass on the current code (build,
@@ -51,6 +64,9 @@ If the design changed since Gate 2, the engine sends the run back to Gate 2 inst
 with the changed files. Request Gate 2 again with those files in the summary; after the developer's approval the
 build loop starts a new pass.
 Gate 3 approves exactly the current code: any change afterwards needs a new request.
+For an imported package with RTM traces, `ba_review.functional_requirements` lists each functional requirement with
+its stories: it is verified only when every story it traces to is verified, and an unverified one keeps Gate 3 closed.
+Show the list.
 
 ## Procedure
 1. Call `get_run_state` and confirm `next_step` names this gate.
@@ -63,10 +79,14 @@ Gate 3 approves exactly the current code: any change afterwards needs a new requ
    - `blocking_questions_open`: 0;
    - `evidence` as in the table; `risks` and `next_steps` as short lines;
    - `statement`: "Approval is yours; agents cannot approve."
+   - leave `sandbox` out: the engine adds where the builds ran to every package it stores;
+   - leave `ba_review` out: the engine fills the BA lists of an imported package (a package that supplies them is
+     refused).
 4. Call `request_approval(run_id, gate, package)`. If `preconditions_met` is false, show `missing`
    and stop. Otherwise the run is paused and the engine records exactly what is approved: if the
    design or evidence changes afterwards, approval is refused and a new package is needed.
-5. Show the summary, the evidence paths, the risks and non-blocking open questions, then end the
+5. Show the summary, the evidence paths, the risks and non-blocking open questions. When the
+   result's message says the builds ran without isolation, show that sentence word for word. End the
    message with this statement and the commands from the result, and end the turn:
    "Approval is yours; agents cannot approve.
     Approve: agents approve <run> <gate>

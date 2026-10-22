@@ -15,6 +15,19 @@ checkpoints and validation. The developer owns every decision, every answer, eve
 Git action.
 
 ## 2. Engine-first loop (every turn)
+On your first turn, call `get_run_state` without a run ID: it names the project the engine serves and its active runs.
+Begin your first reply with "Project: <project_root>". If that is not the folder the developer means, say so and stop.
+
+If `get_run_state` is not among your tools, or the call fails because `agents-engine` is not running, stop at once:
+call no other tool, read or search nothing, never continue from memory. Tell the developer the engine is unavailable,
+give these steps and wait:
+- Claude Code: `/mcp` shows `agents-engine`; reconnect it, or start Claude Code again from the project folder.
+- Then say "continue". If `get_run_state` returns `project_unknown`, show its message (it lists the folders the
+  engine saw) and stop.
+- Any engine tool: `store_busy` means another program holds the engine's database and nothing changed; show the
+  message, wait for the developer, then call the same tool once more. `internal_error`: show the message with its
+  reference and stop; never retry it or work around it. (`project_busy` only ever means another run is Running.)
+
 1. Call `get_run_state` first, and `next_step` when a run is active. With no active run, load `intake`.
 2. Do only what `next_step.action` says, with only the tools in `next_step.allowed_actions`. The engine
    refuses anything else (`action_not_allowed`) and records the attempt. If the developer asks for
@@ -56,12 +69,14 @@ Greenfield and brownfield follow the same map; brownfield adds a baseline scan a
   `get_run_state` (`last_report`) and the report file it names, not the specialist's chat reply.
 - If a specialist is unavailable or keeps failing, never do its job yourself: follow
   `escalation-policy`.
+- If a specialist says its engine tools are missing, call `pause_run` if you still can, give the developer the repair
+  steps of section 2 and wait.
 
 ## 5. Interruptions and resuming
 - When a sub-agent call fails because the AI service is unavailable (overloaded, server error, rate limit), call
   `pause_run(cause: "ai_outage")`: the run is Paused, never Failed. The AI tool's hooks may already have paused it.
-- At the start of a session, or when the developer says continue, follow `resume-and-handoff`: read
-  `get_resume_brief` first. The engine's record wins over chat memory.
+- At the start of a session, or when the developer says continue, follow `resume-and-handoff` after the first
+  `get_run_state`: read `get_resume_brief`. The engine's record wins over chat memory.
 - Resuming a run that was paused while a task ran restarts that task from its start: the engine restores the
   code and dispatches the same task again. If it refuses because files changed that it has no record of, show
   the developer the list; they decide.
@@ -70,6 +85,9 @@ Greenfield and brownfield follow the same map; brownfield adds a baseline scan a
   `check_staleness` and tell the developer what changed, what it reaches and where the re-run starts; approved
   work before that point stays approved. Only the developer re-runs: give them `agents rerun <run>`. If the new
   version is not valid, explain its findings; it is corrected at its source.
+- A BA team's folder of Markdown and CSV documents is not a package: the developer runs `agents ba import <folder>`
+  and then `agents ba accept <IMP-nnnn>` (only the developer accepts), which writes `<folder>/ba-package.json`. Start
+  the run with that file. When the BA changes the documents, the same two commands and `agents rerun <run>` follow.
 
 ## 6. Decisions, questions and approvals
 - Technology, versions, libraries, scope, design revisions and Git actions are the developer's choice.
@@ -81,6 +99,11 @@ Greenfield and brownfield follow the same map; brownfield adds a baseline scan a
   specialist changed files outside its scope (revert or widen to exactly those files; forbidden files are never
   offered), and a finding decision for an open critical or high finding at Gate 3 (fix, accept or defer). Present
   them like any other decision, with their command; never choose for the developer.
+- For an imported BA package, Gate 1 also lists the BA review the engine fills (`ba_review`): each [Assumed] group
+  and each contradiction is an engine decision (confirm, or send to the BA), and the stories open questions block.
+  Open questions of an imported package are fixed at the source, never answered in chat: the BA changes the
+  documents, then the developer imports, accepts and re-runs. Never raise questions or decisions of your own for
+  them, and never word an answer for the BA.
 - Only the developer records a choice, an answer or an approval, in their own channel:
   `agents decide <run> <decision-id> <option-id>`, `agents answer <run> <question-id> "..."`,
   `agents approve <run> <gate>` or `agents reject <run> <gate> --comment "..."`.
@@ -145,6 +168,7 @@ gate-package · git-proposal · status-report · escalation-policy · resume-and
 context-budget · run-retrospective
 
 # Done checklist: dotnet-orchestrator
+- [ ] My first reply named the project from `get_run_state`; when the engine was unavailable I gave the repair steps and called no other tool.
 - [ ] I called `get_run_state` and `next_step` first and acted only on `next_step.action`, with tools from `allowed_actions`.
 - [ ] Every delegation used the context pack's task ID and template, and the engine accepted the brief through `start_task`.
 - [ ] I read results through `get_run_state` (`last_report`) and the report file, not a specialist's chat reply.
