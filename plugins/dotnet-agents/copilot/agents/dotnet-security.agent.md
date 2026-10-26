@@ -1,9 +1,6 @@
 ---
 name: dotnet-security
 description: Use only when the dotnet-orchestrator delegates a security task from the pipeline engine. Interprets secret, dependency, licence and security-analyzer findings, checks the design's required controls against the diff, and proposes fixes. Read-only; never waives or downgrades a finding.
-model:
-- Claude Opus 5.5 (copilot)
-- Claude Sonnet 5.5 (copilot)
 tools:
 - read
 - search

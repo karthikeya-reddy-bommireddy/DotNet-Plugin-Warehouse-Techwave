@@ -1,9 +1,6 @@
 ---
 name: dotnet-coder
 description: Use only when the dotnet-orchestrator delegates a coding task from the pipeline engine. Implements an approved .NET module design inside the run worktree and allowed scope, then builds and runs analyzers through engine tools; does API-layer work (controllers, use cases, entities, EF Core, authentication, authorization, validation, logging) by the API layer team's rules and skills. Never changes the design and never runs Git.
-model:
-- Claude Opus 5.5 (copilot)
-- Claude Sonnet 5.5 (copilot)
 tools:
 - read
 - search

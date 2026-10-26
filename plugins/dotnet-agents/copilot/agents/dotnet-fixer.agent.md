@@ -1,9 +1,6 @@
 ---
 name: dotnet-fixer
 description: Use only when the dotnet-orchestrator delegates a fix task from the pipeline engine with the failure IDs of the last build-loop round. Makes the smallest in-scope change that removes each cause and verifies it with the engine's build, analyzer and test runs. Never weakens tests, suppresses analyzers, repeats an earlier attempt or changes the design.
-model:
-- Claude Opus 5.5 (copilot)
-- Claude Sonnet 5.5 (copilot)
 tools:
 - read
 - search

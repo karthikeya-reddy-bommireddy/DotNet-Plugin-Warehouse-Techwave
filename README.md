@@ -4,7 +4,7 @@
 
 **From business requirements to a reviewed, tested .NET pull request, with AI doing the work and you making every decision.**
 
-![Version](https://img.shields.io/badge/version-1.0.1-2563eb)
+![Version](https://img.shields.io/badge/version-1.0.2-2563eb)
 ![.NET](https://img.shields.io/badge/.NET-10-512bd4)
 ![Claude Code](https://img.shields.io/badge/Claude%20Code-supported-d97757)
 ![GitHub Copilot](https://img.shields.io/badge/GitHub%20Copilot-supported-24292f)
@@ -257,7 +257,7 @@ For example, if you cloned into `C:\tools`, the source is `C:\tools\DotNet-Plugi
 agents verify
 ```
 
-It compares every installed copy of the plugin with its release manifest (the SHA-256 of every file). A good result reads `dotnet-agents 1.0.1, all ... file(s) match the release manifest.`
+It compares every installed copy of the plugin with its release manifest (the SHA-256 of every file). A good result reads `dotnet-agents 1.0.2, all ... file(s) match the release manifest.`
 
 <a id="host-settings"></a>
 
@@ -381,7 +381,7 @@ Mostly: read, answer, decide and approve, then say *"continue"*. `agents status`
 
 | Gate | What you review |
 |---|---|
-| **Gate 1: requirements** | The adapted design summary. For a package imported from BA documents also: the **[Assumed]** items grouped by source section, the **contradictions** kept at acceptance, and the **stories blocked** by open questions. Each [Assumed] group and each contradiction is a decision (confirm, or send to the BA). Gate 1 stays closed while any of them is undecided or sent to the BA, or while a story is blocked. |
+| **Gate 1: requirements** | The adapted design summary. For a package imported from BA documents also: **one card per BA file** with every line the BA marked **[Assumed]** (where it is, its text and the items it flags), the **contradictions** with the decision-register and backlog rows side by side, and the **stories blocked** by open questions. Each line and each contradiction is a decision (confirm, or send to the BA); a card's confirm-all command confirms every line still pending on it, and is refused if the card changed after you saw it. Gate 1 stays closed while any of them is undecided or sent to the BA, or while a story is blocked. |
 | **Gate 2: design** | The module design (or change design or design note), its API contract (`api.yaml`) and the scope: the exact files the run may change. After approval they are frozen. |
 | **Gate 3: verification** | Build, analyzers, tests, review, acceptance criteria, the fake-fix guard (no deleted, skipped or weakened tests), scope, compatibility, design conformance with the requirements verified, security and documentation. For an imported package also each **functional requirement** of the traceability matrix: verified only when all its stories are; an unverified one keeps Gate 3 closed. |
 
@@ -396,7 +396,7 @@ agents answer R-0001 <question-id> "Cancelled orders are kept for 7 years."
 
 - **Approve** a gate only after reading its package. An approval is refused when something is missing; the refusal says what.
 - **Reject** re-opens the work; the next briefs carry your comment. `--step <step>` re-opens from a specific step.
-- **Decide** records your choice on a decision card. Each card lists two or three options with pros, cons, impact and a recommendation; use the option ID it shows. Gate 1's BA decisions use `confirm` or `send_to_ba`.
+- **Decide** records your choice on a decision card. Each card lists two or three options with pros, cons, impact and a recommendation; use the option ID it shows. Gate 1's BA decisions use `confirm` or `send_to_ba`; `agents status <run>` shows Gate 1's cards, and `agents decide <run> --file <file> confirm --shown <hash>` (the command a card shows) confirms a whole card at once.
 - **Answer** replies to a question the agents raised during the run. Answers are read by the agents: never include secrets.
 
 > [!NOTE]
@@ -572,7 +572,9 @@ agents verify
 
 Restart the hosts afterwards. Project files (Visual Studio) are updated by copying `project-files/` again.
 
-**From 1.0.0 to 1.0.1:** update as above. Each agent now asks for its own models, also when the model picker is on Auto. If the 1.0.0 engine left a `.agents/` folder outside your projects, see [Troubleshooting](#troubleshooting).
+**From 1.0.1 to 1.0.2:** update as above. In GitHub Copilot the agents now use the model you pick (Auto included), as in Claude Code. A run that is at Gate 1 of an imported BA package asks its [Assumed] lines once more, one by one; a Gate 1 approval requested before the update cannot be approved: reject it with the `--step` its message names and request Gate 1 again.
+
+**From 1.0.0 to 1.0.1:** update as above. If the 1.0.0 engine left a `.agents/` folder outside your projects, see [Troubleshooting](#troubleshooting).
 
 #### Install a specific version
 
@@ -636,7 +638,7 @@ Every command that takes a project uses `--project <folder>`; the default is the
 |---|---|---|
 | `agents approve <run> <gate>` | `--project`; gate is `gate-1`, `gate-2` or `gate-3` | `agents approve R-0001 gate-3` |
 | `agents reject <run> <gate>` | `--comment "..."` (required), `--step <step>`, `--project` | `agents reject R-0001 gate-1 --comment "Split REQ-004."` |
-| `agents decide <run> <decision-id> <option-id>` | `--project`; the option ID is shown on the decision card | `agents decide R-0001 DEC-001 <option-id>` |
+| `agents decide <run> <decision-id> <option-id>` | `--project`; the option ID is shown on the decision card. Gate 1 of an imported package: `--file <file> confirm --shown <hash>` confirms the pending lines of one card, as the card shows it | `agents decide R-0001 DEC-001 <option-id>` |
 | `agents answer <run> <question-id> "<answer>"` | `--project`; for questions raised during the run | `agents answer R-0001 <question-id> "Yes, soft delete."` |
 | `agents git-decision <run> <choice>` | choice: `commit`, `commit-push`, `commit-push-pr`, `keep`, `discard`; `--branch`, `--message`, `--base`, `--project` | `agents git-decision R-0001 commit-push --branch feature/orders-r-0001` |
 
@@ -685,7 +687,7 @@ Run retrospectives propose lessons; an approved lesson is carried as a note in l
 | Symptom | Cause | Fix |
 |---|---|---|
 | `dotnet-orchestrator` is not in the agent list | The plugin is not loaded | Restart the host. Check `claude plugin list` or `copilot plugin list`. In VS Code check `chat.plugins.enabled`. |
-| The engine's tools are missing in some turns | An older plugin followed the model picker's Auto choice | Update to 1.0.1 or later. Check that Claude Opus 5.5 or Claude Sonnet 5.5 is enabled for you. Check that `agents-engine` is running (VS Code: **MCP: List Servers**). |
+| The engine's tools are missing in some turns | In GitHub Copilot the agents use the model you pick; on Auto, a model without tool support may answer a turn (seen with 1.0.0) | Pick a Claude model in the model picker (Claude Opus 5.5 or Claude Sonnet 5.5) instead of Auto, and tell the plugin team. Check that `agents-engine` is running (VS Code: **MCP: List Servers**). |
 | The orchestrator says the engine is unavailable and stops | The engine (MCP server) is stopped or failed to start | VS Code: **MCP: List Servers**, `agents-engine`, start or restart; **Show Output** shows why. Claude Code and Copilot CLI: `/mcp`. Check `dotnet --version` shows 10.x. Then say "continue". |
 | The first reply names the wrong project | The host opened a parent folder or several folders | Open the project folder itself (one folder) and restart `agents-engine`. In the CLIs, start them in the project folder. |
 | `project_unknown`: "... is not a Git repository" or "is a subfolder of the Git repository" | The agents work only in a Git repository's top folder | Run `git init` and commit, or open the repository's top folder. Then say "continue". |
@@ -732,9 +734,18 @@ Run retrospectives propose lessons; an approved lesson is carried as a note in l
 
 ## 📦 Releases, limitations, support and licence
 
+### What's new in 1.0.2
+
+- **What your project already uses is an option:** in a brownfield run the decision cards offer the technologies the project already uses (for example SQLite), marked "already used by this project". A company-fixed technology the project does not use is decided by you before Gate 1, and you can remember that decision for the project.
+- **SQLite for integration tests**, with its licences checked before any code is written.
+- **Your own technology additions** in `.agents/policies/approved-technologies.additions.yaml` (additive only, licence-checked); policy and overlay files are protected from every agent write.
+- **Every gate shows where technology options come from** and names a policy file that changed since the previous gate.
+- **A readable Gate 1** for an imported BA package: one card per file with every [Assumed] line, a confirm-all per card, contradictions side by side.
+- **GitHub Copilot uses the model you pick**, Auto included, as Claude Code does.
+
 ### What's new in 1.0.1
 
-- **Copilot keeps the engine's tools:** each agent asks for its own models (Claude Opus or Sonnet), also on Auto.
+- **Copilot keeps the engine's tools:** each agent asked for its own models (Claude Opus or Sonnet), also on Auto (in 1.0.2 the model picker decides again).
 - **Right project, every time:** the engine works only in your project, a Git repository's top folder, and never creates `.agents/` anywhere else.
 - **BA documents as a folder:** `agents ba import` and `agents ba accept`. Gate 1 lists the BA's assumptions, contradictions and blocked stories; Gate 3 shows each functional requirement as verified or not.
 - **Safer hooks:** unreadable inputs block instead of letting everything through; unknown tools are refused for specialists; a specialist that tries to finish without a report is sent back once per task.
@@ -745,7 +756,7 @@ Run retrospectives propose lessons; an approved lesson is carried as a note in l
 
 ### Known limitations
 
-- The live checks of 1.0.1 in each host are in progress; the release manifest lists the tested host versions as "pending" until they are recorded.
+- The live checks of 1.0.2 in each host are in progress; the release manifest lists the tested host versions as "pending" until they are recorded.
 - **Visual Studio:** whether the safety hooks run there has not been verified yet. Until it is, run the agents from Claude Code, Copilot CLI or VS Code.
 - The BA import knows the BA document format of the BA team's profile (`ba-phases/1`) and its ID families. A folder with another ID family is blocked until the profile supports it. Non-functional requirements from the FRD get the category "other".
 - The GitHub CLI is needed to open pull requests from the Git step.
@@ -753,7 +764,7 @@ Run retrospectives propose lessons; an approved lesson is carried as a note in l
 
 ### Security review
 
-The changes in 1.0.1 (hook rules, path rules, the build-time code generator, package locking) are approved by the plugin team and awaiting the organisation's security review.
+The changes in 1.0.1 (hook rules, path rules, the build-time code generator, package locking) and in 1.0.2 (the additions file and the policy-write hook rule, the Gate 1 confirm-all command, the policy-file hashes, the BA snapshot check, the Copilot model setting) are approved by the plugin team and awaiting the organisation's security review.
 
 ### Support
 

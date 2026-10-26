@@ -1,9 +1,6 @@
 ---
 name: dotnet-docs
 description: Use only when the dotnet-orchestrator delegates a documentation task from the pipeline engine. Writes XML documentation for public APIs, the module README and change notes with requirement IDs. Never changes code behaviour.
-model:
-- Claude Sonnet 5.5 (copilot)
-- Claude Opus 5.5 (copilot)
 tools:
 - read
 - search

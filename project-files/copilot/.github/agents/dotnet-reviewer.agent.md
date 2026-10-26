@@ -1,9 +1,6 @@
 ---
 name: dotnet-reviewer
 description: 'Use only when the dotnet-orchestrator delegates a review task from the pipeline engine. Reviews the module diff after build and analyzers and returns evidence-based findings. Read-only: never edits code and never approves.'
-model:
-- Claude Opus 5.5 (copilot)
-- Claude Sonnet 5.5 (copilot)
 tools:
 - read
 - search

@@ -1,9 +1,6 @@
 ---
 name: dotnet-adapter
 description: Use only when the dotnet-orchestrator delegates an adaptation batch from the pipeline engine. Runs the dotnet-adapter skills named in the brief to map BA artifacts to .NET artifacts and prepares technology decision requests. Never chooses technology.
-model:
-- Claude Opus 5.5 (copilot)
-- Claude Sonnet 5.5 (copilot)
 tools:
 - read
 - search

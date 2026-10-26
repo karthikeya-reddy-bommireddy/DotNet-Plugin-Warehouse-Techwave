@@ -3,7 +3,7 @@
 This guide gets the `dotnet-agents` plugin working on your own machine with GitHub Copilot, in VS Code or Copilot
 CLI. It takes about 15 minutes.
 
-> **Status:** the plugin is version 1.0.1 and in its testing phase. If a step behaves differently on your machine,
+> **Status:** the plugin is version 1.0.2 and in its testing phase. If a step behaves differently on your machine,
 > tell the plugin team. It helps the live checks.
 
 ---
@@ -155,7 +155,7 @@ To uninstall: `copilot plugin uninstall dotnet-agents`, `copilot plugin marketpl
 | `dotnet-orchestrator` is not in the agent list | Restart VS Code; check `copilot plugin list`; check that `chat.plugins.enabled` is on |
 | "agents-engine" does not start | Check `dotnet --version` (needs 10.x); allow the server when VS Code asks; see the Output panel, MCP logs |
 | The orchestrator says the engine is unavailable and stops | Command Palette, **MCP: List Servers**, `agents-engine`: start or restart it; **Show Output** shows why it stopped. Then say "continue". In Copilot CLI: `/mcp`, or start Copilot CLI again from the project folder |
-| Engine tools are there in some turns and missing in others | Update the plugin to 1.0.1 or later: each agent then asks for its own models instead of following Auto. Check that one of the agent's models (Claude Opus or Sonnet) is enabled for you in the model picker; if your organisation allows neither, tell the plugin team. Check **MCP: List Servers**: `agents-engine` must show as running |
+| Engine tools are there in some turns and missing in others | From 1.0.2 the agents use the model you pick in the model picker (Auto included). If tools go missing on Auto, pick a Claude model (Claude Opus or Sonnet) instead of Auto and tell the plugin team (it can switch the agents back to their own Claude models). Check that `agents-engine` is running (**MCP: List Servers**) |
 | The first reply names the wrong project, or says `project_unknown` | Open the project folder itself in VS Code (File, Open Folder), not a parent folder or a workspace with several folders; then restart `agents-engine`. In Copilot CLI, start `copilot` in the project folder. If it still fails in VS Code, use the project files (step 3, Way C) |
 | A `.agents/` folder appeared in a folder that is not a project (plugin 1.0.0; look in the VS Code installation folder and your home folder) | In that `.agents/` folder delete only what the 1.0.0 engine wrote: `state.db`, `state.db-wal`, `state.db-shm`, `run/`, `plugin/` and `.gitignore`; keep anything else (other tools also use `.agents/`), and delete the folder if it is then empty. 1.0.1 never takes a folder that is not a Git repository for a project, and creates `.agents/` only in the project you work in |
 | The orchestrator says `project_unknown`: "agents-engine cannot use '<folder>'" | The engine keeps its run state in `.agents/` in the project folder and cannot write there. Give your user write access to the project folder, or open a copy you can write (File, Open Folder); then say "continue". The engine tries again at every call, so no restart is needed |

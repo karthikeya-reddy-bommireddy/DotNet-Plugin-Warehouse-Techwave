@@ -3,7 +3,7 @@ name: test-authoring
 description: Use when the brief asks the dotnet-tester to write or update unit and integration tests for a module from its acceptance criteria and design, and to run them with run_tests. Every acceptance criterion gets at least one test that names it. Do not use to change production code, weaken or delete existing tests, or test against real shared or production systems.
 license: Proprietary
 metadata:
-  version: 1.3.0
+  version: 1.4.0
   agent: dotnet-tester
   contract: test-authoring/1
 disable-model-invocation: true
@@ -37,6 +37,20 @@ disable-model-invocation: true
    ```csharp
    var connectionString = Environment.GetEnvironmentVariable("AGENTS_TEST_SQLSERVER")
        ?? await StartLocalContainerAsync();   // Testcontainers, outside the pipeline only
+   ```
+
+   When the integration-test database decision (brief `decisions` or tech profile) is `sqlite`, use
+   SQLite in-memory through the EF Core SQLite provider instead: one open connection per test class,
+   so the database lives as long as the tests, and the schema created from the model. Do not add the
+   package yourself; it comes from the decision. SQLite is not SQL Server: when a criterion depends on
+   SQL Server behaviour (types, collation, migrations), say so in an open question.
+
+   ```csharp
+   var connection = new SqliteConnection("DataSource=:memory:");
+   connection.Open();                                   // keep it open: closing it drops the database
+   // in WebApplicationFactory<Program>.ConfigureWebHost: replace the DbContext registration with
+   services.AddDbContext<<Module>DbContext>(o => o.UseSqlite(connection));
+   // then, once per test class: db.Database.EnsureCreated();
    ```
 
    Never connect to shared or production databases or services, and never use real customer data.

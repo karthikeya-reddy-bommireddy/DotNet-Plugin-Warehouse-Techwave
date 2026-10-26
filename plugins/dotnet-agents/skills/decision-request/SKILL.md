@@ -3,7 +3,7 @@ name: decision-request
 description: Use when a report has status needs_decision, when .NET technology, versions, libraries or patterns must be chosen, or when escalation needs a developer choice. Prepares 2-3 options from the approved list with pros, cons and one recommendation, batched per gate, and records them with request_decision. Do not use for gate approvals (use gate-package) or for open questions without discrete options.
 license: Proprietary
 metadata:
-  version: 1.1.0
+  version: 1.2.0
   agent: dotnet-orchestrator
   contract: decision-request/1
 disable-model-invocation: true
@@ -15,11 +15,18 @@ You prepare the choice; you never make it.
 
 ## Steps
 1. Collect the decisions from `needs_decision` reports and from escalation.
-2. For a technology choice, call `get_approved_options(category)`:
-   - `fixed: true`: the company decided. State the option in designs and briefs; raise no card.
+2. For a technology choice, call `get_approved_options(category, run_id)`:
+   - `must_decide: true`: the company fixed the category, but this brownfield project already uses
+     something else. Do not state the fixed option: raise a card with exactly the listed options,
+     recommending the one already used unless a requirement says otherwise. Gate 1 waits for it.
+   - `fixed: true` (and `must_decide` false): the company decided. State the option in designs and
+     briefs; raise no card.
    - fewer than 2 `options`: say so and ask whether the approved list should be extended. That is a
      policy decision for a person, not for you.
-   - otherwise offer 2 or 3 of those options, never anything else.
+   - otherwise offer 2 or 3 of those options, never anything else. An option with `source: in-use` is
+     already used by this project: every card for the category offers it, and say so on the card.
+     Recommending another option needs the requirement that calls for the change in
+     `linked_requirements`.
    Choices that are not technology use the category `escalation`, `design-revision` or `scope`.
 3. For each option give: a short label (and `version` where the developer must pick one), at most 3
    pros, at most 3 cons and the impact on this run (what changes in design, code or tests).
@@ -37,11 +44,12 @@ You prepare the choice; you never make it.
 ```
 DEC-004  Integration-test database (blocks: Gate 1)            linked: REQ-002, NFR-001
   A) <option label> <version>  - pros: ...  cons: ...  impact: ...
-  B) <option label> <version>  - pros: ...  cons: ...  impact: ...
-  Recommendation: A, because <reason tied to IDs>.
+  B) <option label> (already used by this project: <project file>)  - pros: ...  cons: ...  impact: ...
+  Recommendation: B, because <reason tied to IDs or the existing code>.
   Decide with: agents decide <run> DEC-004 <option-id>
 ```
 
 ## Never
-Offer unapproved options, ask about a fixed category, imply a decision is made, mix approvals into
-decisions, or continue before the decision is recorded.
+Offer unapproved options, ask about a fixed category (unless `must_decide`), state a fixed option the
+project does not use, leave out an option the project already uses, imply a decision is made, mix
+approvals into decisions, or continue before the decision is recorded.

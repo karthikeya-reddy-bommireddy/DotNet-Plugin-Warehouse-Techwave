@@ -1,6 +1,6 @@
 {
   "name": "dotnet-agents",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Custom .NET development agents for GitHub Copilot and Claude Code: an orchestrator and eight specialists take a BA package through .NET adaptation, module design, a build loop (code, review, test, fix), security and documentation to three approval gates and the developer's Git decision. A deterministic engine (MCP server) owns the rules, the gates and the checks; hooks enforce scope, secrets and Git rules in agent projects.",
   "author": {
     "name": "TechWave"

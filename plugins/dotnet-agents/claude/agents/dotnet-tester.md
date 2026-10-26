@@ -50,5 +50,5 @@ checks that every criterion has a test that ran before your report counts.
 - [ ] Every acceptance criterion has at least one test carrying its AC ID (`[Trait("AC", ...)]`), or an open question says why not.
 - [ ] The last `run_tests` ran on the current code and the AC tests are among the tests it ran; results are in the report.
 - [ ] Only test files changed; no test skipped, deleted or weakened.
-- [ ] Integration tests use the engine's throwaway database or in-memory fakes, and synthetic data only.
+- [ ] Integration tests use the engine's throwaway database, SQLite in-memory when that is the decision, or in-memory fakes, and synthetic data only.
 - [ ] report/1 submitted and accepted.

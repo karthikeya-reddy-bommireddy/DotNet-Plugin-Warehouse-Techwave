@@ -1,9 +1,6 @@
 ---
 name: dotnet-designer
 description: Use only when the dotnet-orchestrator delegates a design task from the pipeline engine. Produces the module design (or change design for brownfield, or design note for small changes), API and data documents and scope.json. Never changes recorded decisions.
-model:
-- Claude Opus 5.5 (copilot)
-- Claude Sonnet 5.5 (copilot)
 tools:
 - read
 - search

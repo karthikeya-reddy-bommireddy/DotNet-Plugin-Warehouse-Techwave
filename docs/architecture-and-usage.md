@@ -71,7 +71,7 @@ flowchart TD
 |---|---|---|
 | **Intake** | The engine validates the BA package: missing values, contradictions, injection, secrets. A BA team's folder of documents is imported and accepted first | Fix the package at its source if it is refused. For a folder: `agents ba import <folder>`, then `agents ba accept <IMP-nnnn>` |
 | **Adaptation** | The adapter maps the requirements to .NET. Open points become questions or decisions | Answer and decide with the commands shown |
-| **Gate 1** | The adapted design is put to you. For an imported package also what the BA marked [Assumed] (by section), the contradictions and the stories open questions block | Confirm each [Assumed] group and contradiction or send it to the BA (`agents decide`); open questions are fixed in the BA documents, then `agents ba import`, `agents ba accept`, `agents rerun`. Then `agents approve <run> gate-1` or `agents reject … --comment "…"` |
+| **Gate 1** | The adapted design is put to you. For an imported package also one card per BA file with every line the BA marked [Assumed], the contradictions with both tables' rows and the stories open questions block | Confirm each [Assumed] line (or a whole card at once with the confirm-all command it shows) and each contradiction, or send it to the BA (`agents decide`); open questions are fixed in the BA documents, then `agents ba import`, `agents ba accept`, `agents rerun`. Then `agents approve <run> gate-1` or `agents reject … --comment "…"` |
 | **Plan** | The engine decides between the full path and the small-change path | Nothing |
 | **Design** | The module design, its API contract and the exact files it may change (scope) | Review |
 | **Gate 2** | Design and scope are frozen after your approval | `agents approve <run> gate-2` |

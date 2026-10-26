@@ -6,11 +6,11 @@
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v10.0": {
-      "agents/1.0.1": {
+      "agents/1.0.2": {
         "dependencies": {
-          "Agents.Engine.Server": "1.0.1",
-          "Agents.Hooks": "1.0.1",
-          "Agents.Tools.BaImport": "1.0.1",
+          "Agents.Engine.Server": "1.0.2",
+          "Agents.Hooks": "1.0.2",
+          "Agents.Tools.BaImport": "1.0.2",
           "System.CommandLine": "2.0.12"
         },
         "runtime": {
@@ -1111,157 +1111,157 @@
           }
         }
       },
-      "Agents.Engine.Contracts/1.0.1": {
+      "Agents.Engine.Contracts/1.0.2": {
         "dependencies": {
           "Corvus.Json.ExtendedTypes": "5.7.5"
         },
         "runtime": {
           "Agents.Engine.Contracts.dll": {
-            "assemblyVersion": "1.0.1.0",
-            "fileVersion": "1.0.1.0"
+            "assemblyVersion": "1.0.2.0",
+            "fileVersion": "1.0.2.0"
           }
         }
       },
-      "Agents.Engine.Core/1.0.1": {
+      "Agents.Engine.Core/1.0.2": {
         "dependencies": {
-          "Agents.Engine.Contracts": "1.0.1",
-          "Agents.Hooks": "1.0.1"
+          "Agents.Engine.Contracts": "1.0.2",
+          "Agents.Hooks": "1.0.2"
         },
         "runtime": {
           "Agents.Engine.Core.dll": {
-            "assemblyVersion": "1.0.1.0",
-            "fileVersion": "1.0.1.0"
+            "assemblyVersion": "1.0.2.0",
+            "fileVersion": "1.0.2.0"
           }
         }
       },
-      "Agents.Engine.Server/1.0.1": {
+      "Agents.Engine.Server/1.0.2": {
         "dependencies": {
-          "Agents.Engine.Core": "1.0.1",
-          "Agents.Engine.Store": "1.0.1",
-          "Agents.Tools.BaImport": "1.0.1",
-          "Agents.Tools.BaValidator": "1.0.1",
-          "Agents.Tools.BuildRunner": "1.0.1",
-          "Agents.Tools.CodeScanner": "1.0.1",
-          "Agents.Tools.Git": "1.0.1",
-          "Agents.Tools.OpenApi": "1.0.1",
-          "Agents.Tools.Security": "1.0.1",
+          "Agents.Engine.Core": "1.0.2",
+          "Agents.Engine.Store": "1.0.2",
+          "Agents.Tools.BaImport": "1.0.2",
+          "Agents.Tools.BaValidator": "1.0.2",
+          "Agents.Tools.BuildRunner": "1.0.2",
+          "Agents.Tools.CodeScanner": "1.0.2",
+          "Agents.Tools.Git": "1.0.2",
+          "Agents.Tools.OpenApi": "1.0.2",
+          "Agents.Tools.Security": "1.0.2",
           "Microsoft.Extensions.Hosting": "10.0.12",
           "ModelContextProtocol": "2.2.0"
         },
         "runtime": {
           "Agents.Engine.Server.dll": {
-            "assemblyVersion": "1.0.1.0",
-            "fileVersion": "1.0.1.0"
+            "assemblyVersion": "1.0.2.0",
+            "fileVersion": "1.0.2.0"
           }
         }
       },
-      "Agents.Engine.Store/1.0.1": {
+      "Agents.Engine.Store/1.0.2": {
         "dependencies": {
-          "Agents.Engine.Core": "1.0.1",
+          "Agents.Engine.Core": "1.0.2",
           "Microsoft.Data.Sqlite": "10.0.12"
         },
         "runtime": {
           "Agents.Engine.Store.dll": {
-            "assemblyVersion": "1.0.1.0",
-            "fileVersion": "1.0.1.0"
+            "assemblyVersion": "1.0.2.0",
+            "fileVersion": "1.0.2.0"
           }
         }
       },
-      "Agents.Hooks/1.0.1": {
+      "Agents.Hooks/1.0.2": {
         "runtime": {
           "Agents.Hooks.dll": {
-            "assemblyVersion": "1.0.1.0",
-            "fileVersion": "1.0.1.0"
+            "assemblyVersion": "1.0.2.0",
+            "fileVersion": "1.0.2.0"
           }
         }
       },
-      "Agents.Tools.BaImport/1.0.1": {
+      "Agents.Tools.BaImport/1.0.2": {
         "dependencies": {
-          "Agents.Engine.Core": "1.0.1"
+          "Agents.Engine.Core": "1.0.2"
         },
         "runtime": {
           "Agents.Tools.BaImport.dll": {
-            "assemblyVersion": "1.0.1.0",
-            "fileVersion": "1.0.1.0"
+            "assemblyVersion": "1.0.2.0",
+            "fileVersion": "1.0.2.0"
           }
         }
       },
-      "Agents.Tools.BaValidator/1.0.1": {
+      "Agents.Tools.BaValidator/1.0.2": {
         "dependencies": {
-          "Agents.Engine.Core": "1.0.1",
-          "Agents.Hooks": "1.0.1"
+          "Agents.Engine.Core": "1.0.2",
+          "Agents.Hooks": "1.0.2"
         },
         "runtime": {
           "Agents.Tools.BaValidator.dll": {
-            "assemblyVersion": "1.0.1.0",
-            "fileVersion": "1.0.1.0"
+            "assemblyVersion": "1.0.2.0",
+            "fileVersion": "1.0.2.0"
           }
         }
       },
-      "Agents.Tools.BuildRunner/1.0.1": {
+      "Agents.Tools.BuildRunner/1.0.2": {
         "dependencies": {
-          "Agents.Engine.Core": "1.0.1"
+          "Agents.Engine.Core": "1.0.2"
         },
         "runtime": {
           "Agents.Tools.BuildRunner.dll": {
-            "assemblyVersion": "1.0.1.0",
-            "fileVersion": "1.0.1.0"
+            "assemblyVersion": "1.0.2.0",
+            "fileVersion": "1.0.2.0"
           }
         }
       },
-      "Agents.Tools.CodeScanner/1.0.1": {
+      "Agents.Tools.CodeScanner/1.0.2": {
         "dependencies": {
-          "Agents.Engine.Core": "1.0.1",
+          "Agents.Engine.Core": "1.0.2",
           "Microsoft.Build.Locator": "1.11.2",
           "Microsoft.CodeAnalysis.CSharp.Workspaces": "5.3.0",
           "Microsoft.CodeAnalysis.Workspaces.MSBuild": "5.3.0"
         },
         "runtime": {
           "Agents.Tools.CodeScanner.dll": {
-            "assemblyVersion": "1.0.1.0",
-            "fileVersion": "1.0.1.0"
+            "assemblyVersion": "1.0.2.0",
+            "fileVersion": "1.0.2.0"
           }
         }
       },
-      "Agents.Tools.Git/1.0.1": {
+      "Agents.Tools.Git/1.0.2": {
         "dependencies": {
-          "Agents.Engine.Core": "1.0.1"
+          "Agents.Engine.Core": "1.0.2"
         },
         "runtime": {
           "Agents.Tools.Git.dll": {
-            "assemblyVersion": "1.0.1.0",
-            "fileVersion": "1.0.1.0"
+            "assemblyVersion": "1.0.2.0",
+            "fileVersion": "1.0.2.0"
           }
         }
       },
-      "Agents.Tools.OpenApi/1.0.1": {
+      "Agents.Tools.OpenApi/1.0.2": {
         "dependencies": {
-          "Agents.Engine.Core": "1.0.1",
+          "Agents.Engine.Core": "1.0.2",
           "Microsoft.OpenApi": "3.10.2",
           "Microsoft.OpenApi.YamlReader": "3.10.2"
         },
         "runtime": {
           "Agents.Tools.OpenApi.dll": {
-            "assemblyVersion": "1.0.1.0",
-            "fileVersion": "1.0.1.0"
+            "assemblyVersion": "1.0.2.0",
+            "fileVersion": "1.0.2.0"
           }
         }
       },
-      "Agents.Tools.Security/1.0.1": {
+      "Agents.Tools.Security/1.0.2": {
         "dependencies": {
-          "Agents.Engine.Core": "1.0.1"
+          "Agents.Engine.Core": "1.0.2"
         },
         "runtime": {
           "Agents.Tools.Security.dll": {
-            "assemblyVersion": "1.0.1.0",
-            "fileVersion": "1.0.1.0"
+            "assemblyVersion": "1.0.2.0",
+            "fileVersion": "1.0.2.0"
           }
         }
       }
     }
   },
   "libraries": {
-    "agents/1.0.1": {
+    "agents/1.0.2": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
@@ -1707,62 +1707,62 @@
       "path": "system.diagnostics.eventlog/10.0.12",
       "hashPath": "system.diagnostics.eventlog.10.0.12.nupkg.sha512"
     },
-    "Agents.Engine.Contracts/1.0.1": {
+    "Agents.Engine.Contracts/1.0.2": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
     },
-    "Agents.Engine.Core/1.0.1": {
+    "Agents.Engine.Core/1.0.2": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
     },
-    "Agents.Engine.Server/1.0.1": {
+    "Agents.Engine.Server/1.0.2": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
     },
-    "Agents.Engine.Store/1.0.1": {
+    "Agents.Engine.Store/1.0.2": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
     },
-    "Agents.Hooks/1.0.1": {
+    "Agents.Hooks/1.0.2": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
     },
-    "Agents.Tools.BaImport/1.0.1": {
+    "Agents.Tools.BaImport/1.0.2": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
     },
-    "Agents.Tools.BaValidator/1.0.1": {
+    "Agents.Tools.BaValidator/1.0.2": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
     },
-    "Agents.Tools.BuildRunner/1.0.1": {
+    "Agents.Tools.BuildRunner/1.0.2": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
     },
-    "Agents.Tools.CodeScanner/1.0.1": {
+    "Agents.Tools.CodeScanner/1.0.2": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
     },
-    "Agents.Tools.Git/1.0.1": {
+    "Agents.Tools.Git/1.0.2": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
     },
-    "Agents.Tools.OpenApi/1.0.1": {
+    "Agents.Tools.OpenApi/1.0.2": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
     },
-    "Agents.Tools.Security/1.0.1": {
+    "Agents.Tools.Security/1.0.2": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
